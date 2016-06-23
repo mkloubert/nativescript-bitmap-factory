@@ -170,6 +170,14 @@ AndroidBitmap.prototype._insert = function(other, leftTop) {
                              null);
 };
 
+// [INTERNAL] _resize()
+AndroidBitmap.prototype._resize = function(newSize) {
+    var resizedImage = android.graphics.Bitmap.createScaledBitmap(this._nativeObject,
+                                                                  newSize.width, newSize.height,
+                                                                  false);
+    return new AndroidBitmap(resizedImage);
+};
+
 // [INTERNAL] _setPoint()
 AndroidBitmap.prototype._setPoint = function(color, coordinates) {
     this._nativeObject

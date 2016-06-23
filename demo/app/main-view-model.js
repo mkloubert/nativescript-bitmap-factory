@@ -24,7 +24,7 @@ b.setPoint({ x: i, y: 150 },
             color: KnownColors.Yellow,
             size: 10,
         });
-        var b2 = b.clone();
+        var b2 = b.clone().resize("20x20");
         b.insert(b2, "25,25");
         viewModel.set('image', b.clone().toDataUrl());
     });

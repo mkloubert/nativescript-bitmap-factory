@@ -214,6 +214,20 @@ function setupBitmapClass(bitmapClass) {
         return !TypeUtils.isNullOrUndefined(c) ? c : null;
     };
 
+    // resize()
+    bitmapClass.prototype.resize = function(newSize) {
+        if (TypeUtils.isNullOrUndefined(newSize)) {
+            newSize = {
+                width: this.width,
+                height: this.height
+            };
+        }
+
+        newSize = toSize(newSize);
+
+        return bitmapClass.asBitmap(this._resize(newSize));
+    };
+
     // setPoint
     bitmapClass.prototype.setPoint = function(color, coordinates) {
         color = this.normalizeColor(color);

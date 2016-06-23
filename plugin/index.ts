@@ -296,6 +296,15 @@ export interface IBitmap {
     normalizeColor(value: string | number | IArgb): IArgb;
 
     /**
+     * Creates a copy of that bitmap with a new size.
+     * 
+     * @param {ISize} newSize The new size.
+     * 
+     * @return {IBitmap] The new bitmap.
+     */
+    resize(newSize: ISize | string): IBitmap;
+
+    /**
      * Sets a pixel / point.
      * 
      * @param {IArgb} [color] The color of the point.

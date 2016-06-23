@@ -201,6 +201,24 @@ iOSImage.prototype._insert = function(other, leftTop) {
     });
 };
 
+// [INTERNAL] _resize()
+iOSImage.prototype._resize = function(newSize) {
+    var oldImg = this._nativeObject;
+
+    try {
+        var ns = CGSize(newSize.width, newSize.height);
+        UIGraphicsBeginImageContextWithOptions(ns, false, 0.0);
+
+        oldImg.drawInRect(0, 0,
+                          ns.width, ns.height);
+
+        return new iOSImage(UIGraphicsGetImageFromCurrentImageContext());
+    }
+    finally {
+         UIGraphicsEndImageContext();
+    }
+};
+
 // [INTERNAL] _setPoint()
 iOSImage.prototype._setPoint = function(color, coordinates) {
     color = this.__toIOSColor(color);
