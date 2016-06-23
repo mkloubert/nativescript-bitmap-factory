@@ -29,7 +29,7 @@ b.setPoint({ x: i, y: 150 },
         // var p = b.getPoint({ x: 150, y: 150 });
         // console.log("Point: " + [p.a, p.r, p.g, p.b]);
 
-        viewModel.set('image', b.toDataUrl());
+        viewModel.set('image', b.crop("0,75", "300,150").toDataUrl());
     });
     
     console.log("Bitmap disposed!");

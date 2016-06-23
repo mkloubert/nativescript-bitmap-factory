@@ -118,6 +118,17 @@ export interface IBitmap {
     android: any;
 
     /**
+     * Crops that bitmap and returns its copy.
+     * 
+     * @param {IPoint2D} [leftTop] The coordinates of the left/top corner.
+     * @param {ISize} [size] The size.
+     * 
+     * @return {IBitmap} The cropped bitmap.
+     */
+    crop(leftTop?: IPoint2D | string,
+         size?: ISize | string): IBitmap;
+
+    /**
      * Gets or sets the default color.
      */
     defaultColor: IPoint2D | string | number;
@@ -288,6 +299,6 @@ export function create(width: number, height?: number): IBitmap {
     if (TypeUtils.isNullOrUndefined(height)) {
         height = width;
     }
-    
+
     return BitmapFactory.createBitmap(width, height);
 }

@@ -44,7 +44,14 @@ AndroidBitmap.prototype.__createPaint = function(color) {
     return paint;
 };
 
-// [INTERNAL _dispose()
+// [INTERNAL] _crop()
+AndroidBitmap.prototype._crop = function(leftTop, size) {
+    return android.graphics.Bitmap.createBitmap(this._nativeObject,
+                                                leftTop.x, leftTop.y,
+                                                size.width, size.height);
+};
+
+// [INTERNAL] _dispose()
 AndroidBitmap.prototype._dispose = function(action, tag) {
     this._nativeObject.recycle();
 };

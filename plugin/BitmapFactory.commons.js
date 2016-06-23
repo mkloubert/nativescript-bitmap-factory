@@ -39,6 +39,29 @@ function setupBitmapClass(bitmapClass) {
         get: function() { return Application.android; }
     });
 
+    // crop()
+    bitmapClass.prototype.crop = function(leftTop, size) {
+        if (TypeUtils.isNullOrUndefined(leftTop)) {
+            leftTop = {
+                x: 0,
+                y: 0
+            };
+        }
+
+        leftTop = toPoint2D(leftTop);
+
+        if (TypeUtils.isNullOrUndefined(size)) {
+            size = {
+                width: this.width - leftTop.x,
+                y: this.height - leftTop.y
+            };
+        }
+
+        size = toSize(size);
+
+        return new bitmapClass(this._crop(leftTop, size));
+    };
+
     // defaultColor
     var _defColor = { a: 255, r: 0, g: 0, b: 0 };
     Object.defineProperty(bitmapClass.prototype, 'defaultColor', {

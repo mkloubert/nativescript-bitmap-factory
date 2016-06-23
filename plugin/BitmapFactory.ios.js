@@ -58,7 +58,9 @@ iOSImage.prototype.__onImageContext = function(action, tag) {
         UIGraphicsEndImageContext();
     }
 
+    CGImageRelease(oldImg.CGImage);
     this._nativeObject = newImage;
+
     return result;
 };
 
@@ -74,6 +76,29 @@ iOSImage.prototype.__toIOSColor = function(color) {
         g: color.g,
         b: color.b
     };
+};
+
+// [INTERNAL] _crop()
+iOSImage.prototype._crop = function(leftTop, size) {
+    this.__onImageContext(function(context, tag, oldImage) {
+        var rect = CGRectMake(leftTop.x, leftTop.y,
+                              size.width, size.height);
+
+        var imageRef = CGImageCreateWithImageInRect(oldImage.CGImage, rect);
+
+        var croppedImg = UIImage.imageWithCGImage(imageRef,
+                                                  oldImage.scale, oldImage.imageOrientation);
+
+        CGImageRelease(imageRef);
+
+        return croppedImg;
+    });
+};
+
+// _dispose()
+iOSImage.prototype._dispose = function(action, tag) {
+    CGImageRelease(this._nativeObject.CGImage);
+    this._nativeObject = null;
 };
 
 // [INTERNAL] _drawLine()
@@ -167,7 +192,7 @@ iOSImage.prototype._setPoint = function(color, coordinates) {
     });
 };
 
-// _toObject()
+// [INTERNAL] _toObject()
 iOSImage.prototype._toObject = function(format, quality) {
     var img = this._nativeObject;
 
@@ -209,12 +234,6 @@ iOSImage.prototype._toObject = function(format, quality) {
 
     return bitmapData;
 }
-
-// _dispose()
-iOSImage.prototype._dispose = function(action, tag) {
-    //TODO
-    this._nativeObject = null;
-};
 
 // height
 Object.defineProperty(iOSImage.prototype, 'height', {
