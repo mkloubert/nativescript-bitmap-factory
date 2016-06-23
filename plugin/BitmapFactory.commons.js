@@ -20,6 +20,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+var Application = require("application");
 var KnownColors = require("color/known-colors");
 var TypeUtils = require("utils/types");
 
@@ -33,6 +34,11 @@ const REGEX_SIZE = /^([0-9]+[\.]?[0-9]*)+(\s)*([x|,])(\s)*([0-9]+[\.]?[0-9]*)+$/
 exports.REGEX_SIZE = REGEX_SIZE;
 
 function setupBitmapClass(bitmapClass) {
+    // android
+    Object.defineProperty(bitmapClass.prototype, 'android', {
+        get: function() { return Application.android; }
+    });
+
     // defaultColor
     var _defColor = { a: 255, r: 0, g: 0, b: 0 };
     Object.defineProperty(bitmapClass.prototype, 'defaultColor', {
@@ -138,6 +144,11 @@ function setupBitmapClass(bitmapClass) {
 
         return toARGB(this._getPoint(coordinates));
     };
+
+    // ios
+    Object.defineProperty(bitmapClass.prototype, 'ios', {
+        get: function() { return Application.ios; }
+    });
 
     // normalizeColor()
     bitmapClass.prototype.normalizeColor = function(c) {
