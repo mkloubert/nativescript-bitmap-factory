@@ -159,13 +159,13 @@ export interface IBitmap {
      * 
      * @chainable
      * 
-     * @param {IPoint2D} [center] The center coordinates.
      * @param {ISize} [size] The size.
+     * @param {IPoint2D} [leftTop] The coordinates of the left/top corner.
      * @param {IArgb} [color] The line color.
      * @param {IArgb} [fillColor] The fill color.
      */
-    drawOval(center?: IPoint2D | string,
-             size?: ISize | string,
+    drawOval(size?: ISize | string,
+             leftTop?: IPoint2D | string,
              color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
 
     /**

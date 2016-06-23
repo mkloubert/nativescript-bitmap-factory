@@ -23,13 +23,13 @@
 var BitmapFactoryCommons = require('./BitmapFactory.commons');
 var TypeUtils = require("utils/types");
 
-function iOSImage(img) {
+function iOSImage(uiImage) {
     if (!(this instanceof iOSImage)) {
-        return new iOSImage(img);
+        return new iOSImage(uiImage);
     }
 
     this._isDisposed = false;
-    this._nativeObject = img;
+    this._nativeObject = uiImage;
 }
 
 // [iOS INTERNAL] __CGImage
@@ -37,6 +37,7 @@ Object.defineProperty(iOSImage.prototype, '__CGImage', {
     get: function() { return this._nativeObject.CGImage; }
 });
 
+// [iOS INTERNAL] __onImageContext()
 iOSImage.prototype.__onImageContext = function(action, tag) {
     var oldImg = this._nativeObject;
     
@@ -61,11 +62,27 @@ iOSImage.prototype.__onImageContext = function(action, tag) {
     return result;
 };
 
+// [iOS INTERNAL] __toIOSColor()
+iOSImage.prototype.__toIOSColor = function(color) {
+    if (TypeUtils.isNullOrUndefined(color)) {
+        return null;
+    }
+    
+    return {
+        a: color.a,
+        r: color.r,
+        g: color.g,
+        b: color.b
+    };
+};
+
 // [INTERNAL] _drawLine()
 iOSImage.prototype._drawLine = function(start, end, color) {
+    color = this.__toIOSColor(color);
+
     this.__onImageContext(function(context, tag, oldImage) {
         CGContextSetRGBStrokeColor(context,
-                                   color.r / 255.0, color.g / 255.0, color.b / 255.0, color.a / 255.0);
+                                   color.r, color.g, color.b, color.a);
 
         CGContextSetLineWidth(context, 1.0);
 
@@ -78,17 +95,20 @@ iOSImage.prototype._drawLine = function(start, end, color) {
 };
 
 // [INTERNAL] _drawOval()
-iOSImage.prototype._drawOval = function(center, size, color, fillColor) {
+iOSImage.prototype._drawOval = function(size, leftTop, color, fillColor) {
+    color = this.__toIOSColor(color);
+    fillColor = this.__toIOSColor(fillColor);
+
     this.__onImageContext(function(context, tag, oldImage) {
         CGContextSetRGBStrokeColor(context,
-                                   color.r / 255.0, color.g / 255.0, color.b / 255.0, color.a / 255.0);
+                                   color.r, color.g, color.b, color.a);
 
-        var rect = CGRectMake(center.x - size.width / 2.0, center.y - size.height / 2.0,
+        var rect = CGRectMake(leftTop.x, leftTop.y,
                               size.width, size.height);
 
         if (null !== fillColor) {
             CGContextSetRGBFillColor(context,
-                                     fillColor.r / 255.0, fillColor.g / 255.0, fillColor.b / 255.0, fillColor.a / 255.0);
+                                     fillColor.r, fillColor.g, fillColor.b, fillColor.a);
 
             CGContextFillEllipseInRect(context, rect);
         }
@@ -99,16 +119,19 @@ iOSImage.prototype._drawOval = function(center, size, color, fillColor) {
 
 // [INTERNAL] _drawRect()
 iOSImage.prototype._drawRect = function(center, size, color, fillColor) {
+    color = this.__toIOSColor(color);
+    fillColor = this.__toIOSColor(fillColor);
+
     this.__onImageContext(function(context, tag, oldImage) {
         CGContextSetRGBStrokeColor(context,
-                                   color.r / 255.0, color.g / 255.0, color.b / 255.0, color.a / 255.0);
+                                   color.r, color.g, color.b, color.a);
 
         var rect = CGRectMake(center.x - size.width / 2.0, center.y - size.height / 2.0,
                               size.width, size.height);
 
         if (null !== fillColor) {
             CGContextSetRGBFillColor(context,
-                                     fillColor.r / 255.0, fillColor.g / 255.0, fillColor.b / 255.0, fillColor.a / 255.0);
+                                     fillColor.r, fillColor.g, fillColor.b, fillColor.a);
 
             CGContextFillRect(context, rect);
         }

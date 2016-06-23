@@ -78,28 +78,28 @@ function setupBitmapClass(bitmapClass) {
     };
 
     // drawOval()
-    bitmapClass.prototype.drawOval = function(center, size, color, fillColor) {
-        if (TypeUtils.isNullOrUndefined(center)) {
-            center = {
-                x: this.width / 2.0,
-                y: this.height / 2.0
-            };
-        }
-
-        center = toPoint2D(center);
-
+    bitmapClass.prototype.drawOval = function(size, leftTop, color, fillColor) {
         if (TypeUtils.isNullOrUndefined(size)) {
             size = {
-                height: center.y * 2,
-                width: center.x * 2
+                height: this.height,
+                width: this.width
             };
         }
+        
+        if (TypeUtils.isNullOrUndefined(leftTop)) {
+            leftTop = {
+                x: 0,
+                y: 0
+            };
+        }
+
+        leftTop = toPoint2D(leftTop);
         
         color = this.normalizeColor(color);
         fillColor = toARGB(fillColor);
         size = toSize(size);
 
-        this._drawOval(center, size, color, fillColor);
+        this._drawOval(size, leftTop, color, fillColor);
         return this;
     };
 

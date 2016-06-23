@@ -57,7 +57,7 @@ AndroidBitmap.prototype._drawLine = function(start, end, color) {
 };
 
 // [INTERNAL] _drawOval()
-AndroidBitmap.prototype._drawOval = function(center, size, color, fillColor) {
+AndroidBitmap.prototype._drawOval = function(size, leftTop, color, fillColor) {
     var me = this;
 
     var paintLine = this.__createPaint(color);
@@ -78,19 +78,19 @@ AndroidBitmap.prototype._drawOval = function(center, size, color, fillColor) {
     };
     if (size.width == size.height) {
         var drawer = function(r, p) {
-            var radius = Math.min(size.width / 2.0, size.height / 2.0);
+            var radius = size.width / 2.0;
 
-            me.__canvas.drawCircle(center.x, center.y,
+            me.__canvas.drawCircle(leftTop.x + radius, leftTop.y + radius,
                                    radius,
                                    p);
         };
     }
 
     for (var i = paints.length; i > 0; i--) {
-        var left = center.x - size.width / 2.0;
-        var top = center.y - size.height / 2.0;
-        var right = center.x + size.width / 2.0 - 1;
-        var bottom = center.y + size.height / 2.0 - 1;
+        var left = leftTop.x;
+        var top = leftTop.y;
+        var right = left + size.width / 2.0 - 1;
+        var bottom = top + size.height / 2.0 - 1;
 
         var rect = new android.graphics.RectF(left, top,
                                               right, bottom);
