@@ -20,7 +20,7 @@ b.setPoint({ x: i, y: 150 },
         b.drawOval("300,150", "0,75", KnownColors.Red, KnownColors.Black);
         b.drawCircle(80, null, KnownColors.DarkGreen);
 
-        b.setPoint(KnownColors.Yellow, "160x150");
+        b.setPoint(KnownColors.Yellow, "160,150");
 
         b.drawLine("0,150", "300,75", KnownColors.Blue);
 

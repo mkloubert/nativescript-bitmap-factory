@@ -492,7 +492,7 @@ function toPoint2D(v, throwException) {
     if (typeof v === "string") {
         // string
 
-        var match = REGEX_SIZE.exec(v.toLowerCase().trim());
+        var match = REGEX_POINT_2D.exec(v.toLowerCase().trim());
         
         isValid = null !== match;
         if (isValid) {
