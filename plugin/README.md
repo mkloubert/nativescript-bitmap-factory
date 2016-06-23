@@ -85,6 +85,22 @@ bmp.dispose(() => {
 | asBitmap | Returns a value as wrapped bitmap. |
 | create | Creates a new bitmap instance. |
 
+## Platform specific stuff
+
+You can access the `nativeObject` property to access the platform specific object.
+
+For Android this is a [Bitmap](https://developer.android.com/reference/android/graphics/Bitmap.html) object and for iOS this is an [UIImage](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIImage_Class/) object.
+
+To check the platform you can use the `android` and `ios` properties which have the same values as the corresponding properties from `application` core module.
+
+### Android
+
+You also can access the underlying [Canvas](https://developer.android.com/reference/android/graphics/Canvas.html) object by `__canvas` property.
+
+### iOS
+
+You also can access the underlying [CGImage](https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CGImage/) object by`__CGImage` property.
+
 ## Data types
 
 ### IArgb
