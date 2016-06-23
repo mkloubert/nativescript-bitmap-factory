@@ -149,6 +149,8 @@ export interface IBitmap {
      * @param {ISize} [size] The size.
      * 
      * @return {IBitmap} The cropped bitmap.
+     * 
+     * @throws At least one input value is invalid.
      */
     crop(leftTop?: IPoint2D | string,
          size?: ISize | string): IBitmap;
@@ -178,6 +180,8 @@ export interface IBitmap {
      * @param any [center] The center coordinates.
      * @param any [color] The line color.
      * @param any [fillColor] The fill color.
+     * 
+     * @throws At least one input value is invalid.
      */
     drawCircle(radius?: number,
                center?: IPoint2D | string,
@@ -191,6 +195,8 @@ export interface IBitmap {
      * @param {IPoint2D} start The coordinates of the start point.
      * @param {IPoint2D} end The coordinates of the end point.
      * @param {IArgb} [color] The color to use. Default is black.
+     * 
+     * @throws At least one input value is invalid.
      */
     drawLine(start: IPoint2D | string, end: IPoint2D | string,
              color?: string | number | IArgb): IBitmap;
@@ -204,6 +210,8 @@ export interface IBitmap {
      * @param {IPoint2D} [leftTop] The coordinates of the left/top corner.
      * @param {IArgb} [color] The line color.
      * @param {IArgb} [fillColor] The fill color.
+     * 
+     * @throws At least one input value is invalid.
      */
     drawOval(size?: ISize | string,
              leftTop?: IPoint2D | string,
@@ -218,6 +226,8 @@ export interface IBitmap {
      * @param {IPoint2D} [leftTop] The coordinates of the left/top corner.
      * @param {IArgb} [color] The line color.
      * @param {IArgb} [fillColor] The fill color.
+     * 
+     * @throws At least one input value is invalid.
      */
     drawRect(size?: ISize | string,
              leftTop?: IPoint2D | string,
@@ -229,6 +239,8 @@ export interface IBitmap {
      * @param {IPoint2D} [coordinates] The coordinates of the point.
      * 
      * @return {IArgb} The color.
+     * 
+     * @throws At least one input value is invalid.
      */
     getPoint(coordinates?: IPoint2D | string): IArgb;
 
@@ -258,6 +270,8 @@ export interface IBitmap {
      * @param any value The input value.
      * 
      * @return {IArgb} The output value.
+     * 
+     * @throws At least one input value is invalid.
      */
     normalizeColor(value: string | number | IArgb): IArgb;
 
@@ -266,6 +280,8 @@ export interface IBitmap {
      * 
      * @param {IArgb} [color] The color of the point.
      * @param {IPoint2D} [coordinates] The coordinate where to draw the point.
+     * 
+     * @throws At least one input value is invalid.
      */
     setPoint(color?: string | number | IArgb,
              coordinates?: IPoint2D | string);
@@ -282,6 +298,8 @@ export interface IBitmap {
      * @param {Number} quality A value between 0 (0%) and 100 (100%) for the output quality.
      * 
      * @return {String} The bitmap a Base64 string.
+     * 
+     * @throws At least one input value is invalid.
      */
     toBase64(format?: OutputFormat, quality?: number): string;
 
@@ -292,6 +310,8 @@ export interface IBitmap {
      * @param {Number} quality A value between 0 (0%) and 100 (100%) for the output quality.
      * 
      * @return {String} The bitmap as data url.
+     * 
+     * @throws At least one input value is invalid.
      */
     toDataUrl(format?: OutputFormat, quality?: number): string;
 
@@ -302,6 +322,8 @@ export interface IBitmap {
      * @param {Number} quality A value between 0 (0%) and 100 (100%) for the output quality.
      * 
      * @return {IBitmapData} The bitmap as object.
+     * 
+     * @throws At least one input value is invalid.
      */
     toObject(format?: OutputFormat, quality?: number): IBitmapData;
 
@@ -313,6 +335,8 @@ export interface IBitmap {
      * @param {any} txt The text /value to write.
      * @param {IPoint2D} [leftTop] The left/top corner.
      * @param {IFont} [font] The custom font to use.
+     * 
+     * @throws At least one input value is invalid.
      */
     writeText(txt: any,
               leftTop?: IPoint2D | string, font?: IFont | string): IBitmap;
@@ -323,6 +347,39 @@ export interface IBitmap {
     width: number;
 }
 
+/**
+ * Returns a value as bitmap object.
+ * 
+ * @param any v The input value.
+ * @param {Boolean} [throwException] Throw exception if 'v' is invalid or return (false).
+ * 
+ * @throws Input value is invalid.
+ * 
+ * @return {IBitmap} The output value or (false) if input value is invalid.
+ */
+export function asBitmap(v, throwException: boolean = true): IBitmap | boolean {
+    if (v instanceof BitmapFactory.BitmapClass) {
+        return v;
+    }
+
+    if (TypeUtils.isNullOrUndefined(v)) {
+        return null;
+    }
+
+    if (typeof v === "string") {
+        v = v.trim();
+        if ('' === v) {
+            return null;
+        }
+    }
+
+    var result = BitmapFactory.asBitmapObject(v, asBitmap);
+    if (throwException && (false === result)) {
+        throw "No valid value for a bitmap!";
+    }
+
+    return result;
+}
 
 /**
  * Creates a new bitmap.

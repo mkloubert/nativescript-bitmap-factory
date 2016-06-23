@@ -32,6 +32,7 @@ function AndroidBitmap(bitmap) {
     this._nativeObject = bitmap;
     this.__canvas = new android.graphics.Canvas(bitmap);
 }
+exports.BitmapClass = AndroidBitmap;
 
 // [ANDROID INTERNAL] __context
 Object.defineProperty(AndroidBitmap.prototype, '__context', {
@@ -274,6 +275,17 @@ Object.defineProperty(AndroidBitmap.prototype, 'width', {
 // setup common methods and properties
 BitmapFactoryCommons.setupBitmapClass(AndroidBitmap);
 
+
+function asBitmapObject(v) {
+    if (typeof v === "string") {
+        var decodedBytes = android.util.Base64.decode(v, 0);
+
+        return new AndroidBitmap(android.graphics.BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length));
+    }
+
+    return false;
+}
+exports.asBitmapObject = asBitmapObject;
 
 function createBitmap(width, height) {
     var newBitmap = android.graphics.Bitmap.createBitmap(width, height,

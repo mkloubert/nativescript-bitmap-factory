@@ -37,6 +37,37 @@ var TypeUtils = require("utils/types");
 })(exports.OutputFormat || (exports.OutputFormat = {}));
 var OutputFormat = exports.OutputFormat;
 /**
+ * Returns a value as bitmap object.
+ *
+ * @param any v The input value.
+ * @param {Boolean} [throwException] Throw exception if 'v' is invalid or return (false).
+ *
+ * @throws Input value is invalid.
+ *
+ * @return {IBitmap} The output value or (false) if input value is invalid.
+ */
+function asBitmap(v, throwException) {
+    if (throwException === void 0) { throwException = true; }
+    if (v instanceof BitmapFactory.BitmapClass) {
+        return v;
+    }
+    if (TypeUtils.isNullOrUndefined(v)) {
+        return null;
+    }
+    if (typeof v === "string") {
+        v = v.trim();
+        if ('' === v) {
+            return null;
+        }
+    }
+    var result = BitmapFactory.asBitmapObject(v, asBitmap);
+    if (throwException && (false === result)) {
+        throw "No valid value for a bitmap!";
+    }
+    return result;
+}
+exports.asBitmap = asBitmap;
+/**
  * Creates a new bitmap.
  *
  * @param {Number} width The width of the new image.

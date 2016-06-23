@@ -31,6 +31,7 @@ function iOSImage(uiImage) {
     this._isDisposed = false;
     this._nativeObject = uiImage;
 }
+exports.BitmapClass = iOSImage;
 
 // [iOS INTERNAL] __CGImage
 Object.defineProperty(iOSImage.prototype, '__CGImage', {
@@ -314,6 +315,19 @@ Object.defineProperty(iOSImage.prototype, 'width', {
 // setup common methods and properties
 BitmapFactoryCommons.setupBitmapClass(iOSImage);
 
+
+function asBitmapObject(v) {
+    if (typeof v === "string") {
+        var data = NSData.alloc()
+                         .initWithData(NSData.dataFromBase64String(v));
+
+        var img = UIImage.imageWithData(data);
+        return new iOSImage(img);
+    }
+
+    return false;
+}
+exports.asBitmapObject = asBitmapObject;
 
 function createBitmap(width, height) {
     var img = new interop.Reference();
