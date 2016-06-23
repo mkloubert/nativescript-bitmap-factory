@@ -289,6 +289,11 @@ BitmapFactoryCommons.setupBitmapClass(AndroidBitmap);
 
 
 function asBitmapObject(v) {
+    var bmp = BitmapFactoryCommons.tryGetBitmapObject(AndroidBitmap, v);
+    if (false !== bmp) {
+        return bmp;
+    }
+
     if (typeof v === "string") {
         var decodedBytes = android.util.Base64.decode(v, 0);
 
@@ -298,6 +303,7 @@ function asBitmapObject(v) {
     return false;
 }
 exports.asBitmapObject = asBitmapObject;
+AndroidBitmap.asBitmap = asBitmapObject;
 
 function createBitmap(width, height) {
     var newBitmap = android.graphics.Bitmap.createBitmap(width, height,

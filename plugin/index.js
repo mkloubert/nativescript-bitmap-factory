@@ -48,19 +48,7 @@ var OutputFormat = exports.OutputFormat;
  */
 function asBitmap(v, throwException) {
     if (throwException === void 0) { throwException = true; }
-    if (v instanceof BitmapFactory.BitmapClass) {
-        return v;
-    }
-    if (TypeUtils.isNullOrUndefined(v)) {
-        return null;
-    }
-    if (typeof v === "string") {
-        v = v.trim();
-        if ('' === v) {
-            return null;
-        }
-    }
-    var result = BitmapFactory.asBitmapObject(v, asBitmap);
+    var result = BitmapFactory.asBitmapObject(v);
     if (throwException && (false === result)) {
         throw "No valid value for a bitmap!";
     }

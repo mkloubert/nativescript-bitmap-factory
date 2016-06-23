@@ -334,6 +334,11 @@ BitmapFactoryCommons.setupBitmapClass(iOSImage);
 
 
 function asBitmapObject(v) {
+    var bmp = BitmapFactoryCommons.tryGetBitmapObject(iOSImage, v);
+    if (false !== bmp) {
+        return bmp;
+    }
+
     if (typeof v === "string") {
         var data = NSData.alloc()
                          .initWithBase64Encoding(v);
@@ -345,6 +350,7 @@ function asBitmapObject(v) {
     return false;
 }
 exports.asBitmapObject = asBitmapObject;
+iOSImage.asBitmap = asBitmapObject;
 
 function createBitmap(width, height) {
     var img = new interop.Reference();

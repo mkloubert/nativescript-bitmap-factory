@@ -23,7 +23,6 @@ b.setPoint({ x: i, y: 150 },
         b.writeText("This is a test!", "100,100", {
             color: KnownColors.Yellow,
             size: 10,
-            name: "Arial"
         });
         viewModel.set('image', b.toDataUrl());
     });

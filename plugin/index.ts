@@ -143,6 +143,13 @@ export interface IBitmap {
     android: any;
 
     /**
+     * Clones that bitmap.
+     * 
+     * @return {IBitmap} Cloned bitmap.
+     */
+    clone(): IBitmap;
+
+    /**
      * Crops that bitmap and returns its copy.
      * 
      * @param {IPoint2D} [leftTop] The coordinates of the left/top corner.
@@ -371,22 +378,7 @@ export interface IBitmap {
  * @return {IBitmap} The output value or (false) if input value is invalid.
  */
 export function asBitmap(v: any, throwException: boolean = true): IBitmap {
-    if (v instanceof BitmapFactory.BitmapClass) {
-        return v;
-    }
-
-    if (TypeUtils.isNullOrUndefined(v)) {
-        return null;
-    }
-
-    if (typeof v === "string") {
-        v = v.trim();
-        if ('' === v) {
-            return null;
-        }
-    }
-
-    var result = BitmapFactory.asBitmapObject(v, asBitmap);
+    var result = BitmapFactory.asBitmapObject(v);
     if (throwException && (false === result)) {
         throw "No valid value for a bitmap!";
     }

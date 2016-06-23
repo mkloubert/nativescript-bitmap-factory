@@ -39,6 +39,11 @@ function setupBitmapClass(bitmapClass) {
         get: function() { return Application.android; }
     });
 
+    // clone()
+    bitmapClass.prototype.clone = function() {
+        return bitmapClass.asBitmap(this.toBase64());
+    };
+
     // crop()
     bitmapClass.prototype.crop = function(leftTop, size) {
         if (TypeUtils.isNullOrUndefined(leftTop)) {
@@ -546,3 +551,23 @@ function toSize(v, throwException) {
     return throwOrReturn();
 }
 exports.toSize = toSize;
+
+function tryGetBitmapObject(bitmapClass, v) {
+    if (v instanceof bitmapClass) {
+        return v;
+    }
+
+    if (TypeUtils.isNullOrUndefined(v)) {
+        return null;
+    }
+
+    if (typeof v === "string") {
+        v = v.trim();
+        if ('' === v) {
+            return null;
+        }
+    }
+
+    return false;
+}
+exports.tryGetBitmapObject = tryGetBitmapObject;
