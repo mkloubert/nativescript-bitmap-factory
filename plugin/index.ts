@@ -64,6 +64,31 @@ export interface IBitmapData {
 }
 
 /**
+ * Describes an object that stores a font.
+ */
+export interface IFont {
+    /**
+     * Anti alias or not.
+     */
+    antiAlias?: boolean;
+
+    /**
+     * Gets the custom forground color.
+     */
+    color?: string | number | IArgb;
+    
+    /**
+     * Gets the name.
+     */
+    name?: string;
+
+    /**
+     * Gets the size.
+     */
+    size?: number;
+}
+
+/**
  * A 2D point.
  */
 export interface IPoint2D {
@@ -279,6 +304,18 @@ export interface IBitmap {
      * @return {IBitmapData} The bitmap as object.
      */
     toObject(format?: OutputFormat, quality?: number): IBitmapData;
+
+    /**
+     * Writes a text.
+     * 
+     * @chainable
+     * 
+     * @param {any} txt The text /value to write.
+     * @param {IPoint2D} [leftTop] The left/top corner.
+     * @param {IFont} [font] The custom font to use.
+     */
+    writeText(txt: any,
+              leftTop?: IPoint2D | string, font?: IFont | string): IBitmap;
 
     /**
      * Gets the width of the bitmap.

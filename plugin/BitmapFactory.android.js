@@ -33,6 +33,11 @@ function AndroidBitmap(bitmap) {
     this.__canvas = new android.graphics.Canvas(bitmap);
 }
 
+// [ANDROID INTERNAL] __context
+Object.defineProperty(AndroidBitmap.prototype, '__context', {
+    get: function() { return this.android.context; }
+});
+
 // [ANDROID INTERNAL] __createPaint()
 AndroidBitmap.prototype.__createPaint = function(color) {
     var paint = new android.graphics.Paint();
@@ -194,6 +199,57 @@ AndroidBitmap.prototype._toObject = function(format, quality) {
         stream.close();
     }
 }
+
+// _writeText()
+AndroidBitmap.prototype._writeText = function(txt, leftTop, font) {
+    var resources = this.__context.getResources();
+    var scale = resources.getDisplayMetrics().density;
+
+    var antiAlias;
+    var fontColor;
+    var fontSize = 10;
+    var fontName;
+    if (null !== font) {
+        fontColor = font.color;
+        fontSize = font.size;
+        fontName = font.name;
+    }
+
+    if (TypeUtils.isNullOrUndefined(antiAlias)) {
+        antiAlias = true;
+    }
+
+    var paint;
+    if (antiAlias) {
+        paint = new android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG);
+    }
+    else {
+        paint = new android.graphics.Paint();
+    }
+
+    fontColor = this.normalizeColor(fontColor);
+    if (!TypeUtils.isNullOrUndefined(fontColor)) {
+        paint.setARGB(fontColor.a, fontColor.r, fontColor.g, fontColor.b);
+    }
+
+    if (!TypeUtils.isNullOrUndefined(fontSize)) {
+        paint.setTextSize(fontSize * scale);
+    }
+
+    if (!TypeUtils.isNullOrUndefined(fontName)) {
+        fontName = ('' + fontName).trim();
+        if ('' !== fontName) {
+            var typeFace = android.graphics.Typeface.create(fontName, android.graphics.Typeface.NORMAL);
+            paint.setTypeface(typeFace);
+        }
+    }
+    
+    paint.setXfermode(new android.graphics.PorterDuffXfermode(android.graphics.PorterDuff.Mode.SRC_OVER));
+
+    this.__canvas.drawText(txt,
+                           leftTop.x, leftTop.y,
+                           paint);
+};
 
 // height
 Object.defineProperty(AndroidBitmap.prototype, 'height', {

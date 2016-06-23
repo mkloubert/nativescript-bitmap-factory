@@ -253,6 +253,29 @@ function setupBitmapClass(bitmapClass) {
         return this._toObject(format, quality);
     };
 
+    // writeText()
+    bitmapClass.prototype.writeText = function(txt, leftTop, font) {
+        if (TypeUtils.isNullOrUndefined(txt)) {
+            txt = '';
+        }
+
+        if (TypeUtils.isNullOrUndefined(leftTop)) {
+            leftTop = {
+                x: 0,
+                y: 0
+            };
+        }
+
+        leftTop = toPoint2D(leftTop);
+        font = toFont(font);
+
+        txt = '' + txt;
+        if ('' !== txt) {
+            this._writeText(txt, leftTop, font);
+        }
+        return this;
+    };
+
     var _size = {};
 }
 exports.setupBitmapClass = setupBitmapClass;
@@ -355,6 +378,55 @@ function toARGB(v, throwException) {
     return throwOrReturn();
 }
 exports.toARGB = toARGB;
+
+function toFont(v, throwException) {
+    if (TypeUtils.isNullOrUndefined(v)) {
+        return null;
+    }
+
+    var font = {};
+
+    var isValid = true;
+
+    if (arguments.length < 2) {
+        throwException = true;
+    }
+
+    var throwOrReturn = function() {
+        if (isValid) {
+            return font;
+        }
+
+        if (throwException) {
+            throw "NO valid font value!";
+        }
+
+        return false;
+    };
+
+    if (typeof v === "string") {
+        // string
+
+        v = v.trim();
+
+        isValid = '' !== v;
+        if (isValid) {
+            font.name = v;
+        }
+    }
+    else if (typeof v === "object") {
+        // object
+        
+        isValid = (typeof v.name !== undefined);
+
+        if (isValid) {
+            font = v;
+        }
+    }
+
+    return throwOrReturn();
+}
+exports.toFont = toFont;
 
 function toPoint2D(v, throwException) {
     if (TypeUtils.isNullOrUndefined(v)) {

@@ -229,6 +229,64 @@ iOSImage.prototype._toObject = function(format, quality) {
     return bitmapData;
 }
 
+// _writeText()
+iOSImage.prototype._writeText = function(txt, leftTop, font) {
+    var resources = this.__context.getResources();
+    var scale = resources.getDisplayMetrics().density;
+
+    var antiAlias;
+    var fontColor;
+    var fontSize;
+    var fontName;
+    if (null !== font) {
+        fontColor = font.color;
+        fontSize = font.size;
+        fontName = font.name;
+    }
+
+    fontColor = this.__toIOSColor(fontColor);
+
+    if (TypeUtils.isNullOrUndefined(antiAlias)) {
+        antiAlias = true;
+    }
+
+    var settings = NSMutableAttributedString.alloc().initWithString(txt);
+    var settingsRange = NSMakeRange(0, settings.length);
+
+    if (null !== fontColor) {
+        settings.addAttribute(NSForegroundColorAttributeName,
+                              UIColor.initWithRed(fontColor.r, fontColor.g, fontColor.b,
+                                                  fontColor.a),
+                              settingsRange);
+    }
+
+    if (TypeUtils.isNullOrUndefined(fontSize)) {
+        fontSize = 10;
+    }
+
+    var iosFont;
+    if (!TypeUtils.isNullOrUndefined(fontName)) {
+        fontName = ('' + fontName).trim();
+        if ('' !== fontName) {
+            iosFont = UIFont.fontWithName(fontName, fontSize);
+        }
+    }
+
+    if (TypeUtils.isNullOrUndefined(iosFont)) {
+        iosFont = UIFont.systemFontOfSize(fontSize);
+    }
+
+    settings.addAttribute(NSFontAttributeName, iosFont,
+                          settingsRange);
+    
+    this.__onImageContext(function(context, tag, oldImage) {
+        var rect = CGRectMake(leftTop.x, leftTop.y,
+                              oldImage.size.width, oldImage.size.height);
+
+        settings.drawInRect(CGRectIntegral(rect));
+    });
+};
+
 // height
 Object.defineProperty(iOSImage.prototype, 'height', {
     get: function() { return this._nativeObject.size.height; }

@@ -20,7 +20,12 @@ b.setPoint({ x: i, y: 150 },
         // b.drawRect("150,150", "30x20", KnownColors.White);
         // var p = b.getPoint({ x: 150, y: 150 });
         // console.log("Point: " + [p.a, p.r, p.g, p.b]);
-        viewModel.set('image', b.crop("0,75", "300,150").toDataUrl());
+        b.writeText("This is a test!", "100,100", {
+            color: KnownColors.Yellow,
+            size: 10,
+            name: "Arial"
+        });
+        viewModel.set('image', b.toDataUrl());
     });
     console.log("Bitmap disposed!");
     console.log("Bitmap.isDisposed: " + bmp.isDisposed);
