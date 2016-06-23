@@ -230,7 +230,7 @@ function setupBitmapClass(bitmapClass) {
 
     // toBase64()
     bitmapClass.prototype.toBase64 = function(format, quality) {
-        return this._toObject(format, quality)
+        return this.toObject(format, quality)
                    .base64;
     };
 

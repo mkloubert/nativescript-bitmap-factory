@@ -357,7 +357,7 @@ export interface IBitmap {
  * 
  * @return {IBitmap} The output value or (false) if input value is invalid.
  */
-export function asBitmap(v, throwException: boolean = true): IBitmap | boolean {
+export function asBitmap(v, throwException: boolean = true): IBitmap {
     if (v instanceof BitmapFactory.BitmapClass) {
         return v;
     }

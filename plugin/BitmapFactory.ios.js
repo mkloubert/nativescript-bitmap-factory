@@ -232,9 +232,6 @@ iOSImage.prototype._toObject = function(format, quality) {
 
 // _writeText()
 iOSImage.prototype._writeText = function(txt, leftTop, font) {
-    var resources = this.__context.getResources();
-    var scale = resources.getDisplayMetrics().density;
-
     var antiAlias;
     var fontColor;
     var fontSize;
@@ -319,7 +316,7 @@ BitmapFactoryCommons.setupBitmapClass(iOSImage);
 function asBitmapObject(v) {
     if (typeof v === "string") {
         var data = NSData.alloc()
-                         .initWithData(NSData.dataFromBase64String(v));
+                         .initWithBase64Encoding(v);
 
         var img = UIImage.imageWithData(data);
         return new iOSImage(img);
