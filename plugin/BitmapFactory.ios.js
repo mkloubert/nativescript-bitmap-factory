@@ -80,18 +80,12 @@ iOSImage.prototype.__toIOSColor = function(color) {
 
 // [INTERNAL] _crop()
 iOSImage.prototype._crop = function(leftTop, size) {
-    this.__onImageContext(function(context, tag, oldImage) {
+    return this.__onImageContext(function(context, tag, oldImage) {
         var rect = CGRectMake(leftTop.x, leftTop.y,
                               size.width, size.height);
 
         var imageRef = CGImageCreateWithImageInRect(oldImage.CGImage, rect);
-
-        var croppedImg = UIImage.imageWithCGImage(imageRef,
-                                                  oldImage.scale, oldImage.imageOrientation);
-
-        CGImageRelease(imageRef);
-
-        return croppedImg;
+        return UIImage(imageRef);
     });
 };
 
