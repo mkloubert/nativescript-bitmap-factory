@@ -284,9 +284,7 @@ function setupBitmapClass(bitmapClass) {
     };
 
     // setPoint
-    bitmapClass.prototype.setPoint = function(color, coordinates) {
-        color = this.normalizeColor(color);
-        
+    bitmapClass.prototype.setPoint = function(coordinates, color) {
         if (TypeUtils.isNullOrUndefined(coordinates)) {
             coordinates = {
                 x: this.width / 2.0,
@@ -296,7 +294,9 @@ function setupBitmapClass(bitmapClass) {
 
         coordinates = toPoint2D(coordinates);
 
-        this._setPoint(color, coordinates);
+        color = this.normalizeColor(color);
+
+        this._setPoint(coordinates, color);
         return this;
     };
 

@@ -334,13 +334,13 @@ export interface IBitmap {
     /**
      * Sets a pixel / point.
      * 
-     * @param {IArgb} [color] The color of the point.
      * @param {IPoint2D} [coordinates] The coordinate where to draw the point.
+     * @param {IArgb} [color] The color of the point.
      * 
      * @throws At least one input value is invalid.
      */
-    setPoint(color?: string | number | IArgb,
-             coordinates?: IPoint2D | string);
+    setPoint(coordinates?: IPoint2D | string,
+             color?: string | number | IArgb);
 
     /**
      * Gets the size.

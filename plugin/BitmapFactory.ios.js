@@ -220,7 +220,7 @@ iOSImage.prototype._resize = function(newSize) {
 };
 
 // [INTERNAL] _setPoint()
-iOSImage.prototype._setPoint = function(color, coordinates) {
+iOSImage.prototype._setPoint = function(coordinates, color) {
     color = this.__toIOSColor(color);
 
     this.__onImageContext(function(context) {

@@ -179,7 +179,7 @@ AndroidBitmap.prototype._resize = function(newSize) {
 };
 
 // [INTERNAL] _setPoint()
-AndroidBitmap.prototype._setPoint = function(color, coordinates) {
+AndroidBitmap.prototype._setPoint = function(coordinates, color) {
     this._nativeObject
         .setPixel(coordinates.x, coordinates.y,
                   android.graphics.Color.argb(color.a, color.r, color.g, color.b));
