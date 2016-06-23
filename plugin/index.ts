@@ -253,6 +253,19 @@ export interface IBitmap {
      * Get the iOS specific object provided by 'application' module.
      */
     ios: any;
+
+    /**
+     * Inserts another image into that bitmap.
+     * 
+     * @chainable
+     * 
+     * @param {IBitmap} other The other image.
+     * @param {IPoint2D} [leftTop] The coordinates of the left/top corner.
+     * 
+     * @throws At least one input value is invalid.
+     */
+    insert(other: any,
+           leftTop?: IPoint2D | string): IBitmap;
     
     /**
      * Gets if the object has been disposed or not.
@@ -357,7 +370,7 @@ export interface IBitmap {
  * 
  * @return {IBitmap} The output value or (false) if input value is invalid.
  */
-export function asBitmap(v, throwException: boolean = true): IBitmap {
+export function asBitmap(v: any, throwException: boolean = true): IBitmap {
     if (v instanceof BitmapFactory.BitmapClass) {
         return v;
     }

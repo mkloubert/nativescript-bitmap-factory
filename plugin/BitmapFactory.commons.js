@@ -180,6 +180,23 @@ function setupBitmapClass(bitmapClass) {
         return toARGB(this._getPoint(coordinates));
     };
 
+    // insert()
+    bitmapClass.prototype.insert = function(other, leftTop) {
+        if (TypeUtils.isNullOrUndefined(leftTop)) {
+            leftTop = {
+                x: 0,
+                y: 0
+            };
+        }
+
+        leftTop = toPoint2D(leftTop);
+
+        if (!TypeUtils.isNullOrUndefined(other)) {
+            this._insert(other, leftTop);
+        }
+        return this;
+    };
+
     // ios
     Object.defineProperty(bitmapClass.prototype, 'ios', {
         get: function() { return Application.ios; }

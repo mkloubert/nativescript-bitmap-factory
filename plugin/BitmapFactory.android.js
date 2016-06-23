@@ -147,6 +147,18 @@ AndroidBitmap.prototype._getPoint = function(coordinates) {
                .getPixel(coordinates.x, coordinates.y);
 };
 
+// [INTERNAL] _insert()
+AndroidBitmap.prototype._insert = function(other, leftTop) {
+    var bmp = asBitmapObject(other);
+    if (false === bmp) {
+        throw "NO valid bitmap!";
+    }
+
+    this.__canvas.drawBitmap(bmp._nativeObject,
+                             leftTop.x, leftTop.y,
+                             null);
+};
+
 // [INTERNAL] _setPoint()
 AndroidBitmap.prototype._setPoint = function(color, coordinates) {
     this._nativeObject

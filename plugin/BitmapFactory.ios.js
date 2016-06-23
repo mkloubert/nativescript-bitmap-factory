@@ -175,6 +175,26 @@ iOSImage.prototype._getPoint = function(coordinates) {
     return (a << 24) | (r << 16) | (g << 8) | b;
 };
 
+// [INTERNAL] _insert()
+AndroidBitmap.prototype._insert = function(other, leftTop) {
+    var bmp = asBitmapObject(other);
+    if (false === bmp) {
+        throw "NO valid bitmap!";
+    }
+
+    this.__onImageContext(function(context, tag, oldImage) {
+        var left = leftTop.x;
+        var top = leftTop.y;
+        var width = Math.min(bmp.width,
+                             oldImage.size.width - left);
+        var height = Math.min(bmp.height,
+                              oldImage.size.height - top);
+
+        bmp.drawInRect(CGRectMake(leftTop.x, leftTop.y,
+                                  width, height));
+    });
+};
+
 // [INTERNAL] _setPoint()
 iOSImage.prototype._setPoint = function(color, coordinates) {
     color = this.__toIOSColor(color);
