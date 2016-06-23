@@ -71,10 +71,10 @@ iOSImage.prototype.__toIOSColor = function(color) {
     }
     
     return {
-        a: color.a,
-        r: color.r,
-        g: color.g,
-        b: color.b
+        a: color.a / 255.0,
+        r: color.r / 255.0,
+        g: color.g / 255.0,
+        b: color.b / 255.0
     };
 };
 
@@ -137,7 +137,7 @@ iOSImage.prototype._drawOval = function(size, leftTop, color, fillColor) {
 };
 
 // [INTERNAL] _drawRect()
-iOSImage.prototype._drawRect = function(center, size, color, fillColor) {
+iOSImage.prototype._drawRect = function(leftTop, size, color, fillColor) {
     color = this.__toIOSColor(color);
     fillColor = this.__toIOSColor(fillColor);
 
@@ -244,6 +244,7 @@ iOSImage.prototype._writeText = function(txt, leftTop, font) {
         fontName = font.name;
     }
 
+    fontColor = this.normalizeColor(fontColor);
     fontColor = this.__toIOSColor(fontColor);
 
     if (TypeUtils.isNullOrUndefined(antiAlias)) {
@@ -254,10 +255,13 @@ iOSImage.prototype._writeText = function(txt, leftTop, font) {
     var settingsRange = NSMakeRange(0, settings.length);
 
     if (null !== fontColor) {
-        settings.addAttribute(NSForegroundColorAttributeName,
-                              UIColor.initWithRed(fontColor.r, fontColor.g, fontColor.b,
-                                                  fontColor.a),
-                              settingsRange);
+        var iosFontColor = UIColor.alloc()
+                                  .initWithRedGreenBlueAlpha(fontColor.r, fontColor.g, fontColor.b,
+                                                             fontColor.a);
+
+        settings.addAttributeValueRange(NSForegroundColorAttributeName,
+                                        iosFontColor,
+                                        settingsRange);
     }
 
     if (TypeUtils.isNullOrUndefined(fontSize)) {
@@ -268,7 +272,7 @@ iOSImage.prototype._writeText = function(txt, leftTop, font) {
     if (!TypeUtils.isNullOrUndefined(fontName)) {
         fontName = ('' + fontName).trim();
         if ('' !== fontName) {
-            iosFont = UIFont.fontWithName(fontName, fontSize);
+            iosFont = UIFont.fontWithNameSize(fontName, fontSize);
         }
     }
 
@@ -276,8 +280,8 @@ iOSImage.prototype._writeText = function(txt, leftTop, font) {
         iosFont = UIFont.systemFontOfSize(fontSize);
     }
 
-    settings.addAttribute(NSFontAttributeName, iosFont,
-                          settingsRange);
+    settings.addAttributeValueRange(NSFontAttributeName, iosFont,
+                                    settingsRange);
     
     this.__onImageContext(function(context, tag, oldImage) {
         var rect = CGRectMake(leftTop.x, leftTop.y,
