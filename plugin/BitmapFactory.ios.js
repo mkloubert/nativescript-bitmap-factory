@@ -206,11 +206,11 @@ iOSImage.prototype._resize = function(newSize) {
     var oldImg = this._nativeObject;
 
     try {
-        var ns = CGSize(newSize.width, newSize.height);
-        UIGraphicsBeginImageContextWithOptions(ns, false, 0.0);
+        var ns = CGSizeMake(newSize.width, newSize.height);
+        UIGraphicsBeginImageContextWithOptions(ns);
 
-        oldImg.drawInRect(0, 0,
-                          ns.width, ns.height);
+        oldImg.drawInRect(CGRectMake(0, 0,
+                                     ns.width, ns.height));
 
         return new iOSImage(UIGraphicsGetImageFromCurrentImageContext());
     }
