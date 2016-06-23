@@ -181,7 +181,7 @@ iOSImage.prototype._getPoint = function(coordinates) {
 };
 
 // [INTERNAL] _insert()
-AndroidBitmap.prototype._insert = function(other, leftTop) {
+iOSImage.prototype._insert = function(other, leftTop) {
     var bmp = asBitmapObject(other);
     if (false === bmp) {
         throw "NO valid bitmap!";
@@ -195,7 +195,8 @@ AndroidBitmap.prototype._insert = function(other, leftTop) {
         var height = Math.min(bmp.height,
                               oldImage.size.height - top);
 
-        bmp.drawInRect(CGRectMake(leftTop.x, leftTop.y,
+        bmp._nativeObject
+           .drawInRect(CGRectMake(leftTop.x, leftTop.y,
                                   width, height));
     });
 };
