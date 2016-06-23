@@ -326,6 +326,11 @@ iOSImage.prototype._writeText = function(txt, leftTop, font) {
                                     settingsRange);
     
     this.__onImageContext(function(context, tag, oldImage) {
+        if (antiAlias) {
+            CGContextSetAllowsAntialiasing(context, true);
+            CGContextSetShouldAntialias(context, true);
+        }
+
         var rect = CGRectMake(leftTop.x, leftTop.y,
                               oldImage.size.width, oldImage.size.height);
 
