@@ -3,7 +3,7 @@
 
 # NativeScript Bitmap Factory
 
-A [NativeScript](https://nativescript.org/) module providing [LINQ](https://en.wikipedia.org/wiki/Language_Integrated_Query) style extensions for handling arrays and lists.
+A [NativeScript](https://nativescript.org/) module for creating and manipulating bitmap images.
 
 ## License
 
