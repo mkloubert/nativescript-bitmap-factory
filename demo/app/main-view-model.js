@@ -13,10 +13,11 @@ function createViewModel() {
 b.setPoint({ x: i, y: 150 },
                    KnownColors.Red);
         } */
-        b.drawOval("150,150", "300,150", KnownColors.Red, KnownColors.Black);
-        b.setPoint({ x: 150, y: 140 }, KnownColors.Yellow);
+        b.drawOval("300,150", "0,75", KnownColors.Red, KnownColors.Black);
+        b.drawCircle(80, null, KnownColors.DarkGreen);
+        b.setPoint(KnownColors.Yellow, "160x150");
         b.drawLine("0,150", "300,75", KnownColors.Blue);
-        b.drawRect("150,150", "30x20", KnownColors.White);
+        // b.drawRect("150,150", "30x20", KnownColors.White);
         // var p = b.getPoint({ x: 150, y: 150 });
         // console.log("Point: " + [p.a, p.r, p.g, p.b]);
         viewModel.set('image', b.toDataUrl());

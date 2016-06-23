@@ -156,9 +156,11 @@ iOSImage.prototype._getPoint = function(coordinates) {
 };
 
 // [INTERNAL] _setPoint()
-iOSImage.prototype._setPoint = function(coordinates, color) {
+iOSImage.prototype._setPoint = function(color, coordinates) {
+    color = this.__toIOSColor(color);
+
     this.__onImageContext(function(context) {
-        CGContextSetRGBFillColor(context, color.r / 255.0, color.g / 255.0, color.b / 255.0, color.a / 255.0);
+        CGContextSetRGBFillColor(context, color.r, color.g, color.b, color.a);
         
         CGContextFillRect(context, CGRectMake(coordinates.x, coordinates.y,
                                               1, 1));

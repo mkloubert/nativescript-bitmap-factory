@@ -113,6 +113,11 @@ export enum OutputFormat {
  */
 export interface IBitmap {
     /**
+     * Get the android specific object provided by 'application' module.
+     */
+    android: any;
+
+    /**
      * Gets or sets the default color.
      */
     defaultColor: IPoint2D | string | number;
@@ -195,6 +200,11 @@ export interface IBitmap {
      * Gets the height of the bitmap.
      */
     height: number;
+
+    /**
+     * Get the iOS specific object provided by 'application' module.
+     */
+    ios: any;
     
     /**
      * Gets if the object has been disposed or not.
@@ -218,11 +228,11 @@ export interface IBitmap {
     /**
      * Sets a pixel / point.
      * 
-     * @param {IPoint2D} [coordinates] The coordinate where to draw the point.
      * @param {IArgb} [color] The color of the point.
+     * @param {IPoint2D} [coordinates] The coordinate where to draw the point.
      */
-    setPoint(coordinates?: IPoint2D | string,
-             color?: string | number | IArgb);
+    setPoint(color?: string | number | IArgb,
+             coordinates?: IPoint2D | string);
 
     /**
      * Gets the size.
@@ -265,6 +275,7 @@ export interface IBitmap {
     width: number;
 }
 
+
 /**
  * Creates a new bitmap.
  * 
@@ -277,6 +288,6 @@ export function create(width: number, height?: number): IBitmap {
     if (TypeUtils.isNullOrUndefined(height)) {
         height = width;
     }
-
+    
     return BitmapFactory.createBitmap(width, height);
 }

@@ -53,7 +53,7 @@ AndroidBitmap.prototype._dispose = function(action, tag) {
 AndroidBitmap.prototype._drawLine = function(start, end, color) {
     this.__canvas.drawLine(start.x, start.y,
                            end.x, end.y,
-                           color);
+                           this.__createPaint(color));
 };
 
 // [INTERNAL] _drawOval()
@@ -78,9 +78,9 @@ AndroidBitmap.prototype._drawOval = function(size, leftTop, color, fillColor) {
     };
     if (size.width == size.height) {
         var drawer = function(r, p) {
-            var radius = size.width / 2.0;
+            var radius = (r.right - r.left) / 2.0;
 
-            me.__canvas.drawCircle(leftTop.x + radius, leftTop.y + radius,
+            me.__canvas.drawCircle(r.left + radius, r.top + radius,
                                    radius,
                                    p);
         };
@@ -89,8 +89,8 @@ AndroidBitmap.prototype._drawOval = function(size, leftTop, color, fillColor) {
     for (var i = paints.length; i > 0; i--) {
         var left = leftTop.x;
         var top = leftTop.y;
-        var right = left + size.width / 2.0 - 1;
-        var bottom = top + size.height / 2.0 - 1;
+        var right = left + size.width - 1;
+        var bottom = top + size.height - 1;
 
         var rect = new android.graphics.RectF(left, top,
                                               right, bottom);
@@ -135,7 +135,7 @@ AndroidBitmap.prototype._getPoint = function(coordinates) {
 };
 
 // [INTERNAL] _setPoint()
-AndroidBitmap.prototype._setPoint = function(coordinates, color) {
+AndroidBitmap.prototype._setPoint = function(color, coordinates) {
     this._nativeObject
         .setPixel(coordinates.x, coordinates.y,
                   android.graphics.Color.argb(color.a, color.r, color.g, color.b));

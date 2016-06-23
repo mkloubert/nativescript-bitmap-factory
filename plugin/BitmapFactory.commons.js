@@ -66,11 +66,23 @@ function setupBitmapClass(bitmapClass) {
 
     // drawCircle()
     bitmapClass.prototype.drawCircle = function(radius, center, color, fillColor) {
-        if (TypeUtils.isNullOrUndefined(radius)) {
-            radius = Math.min(center.x, center.y);
+        if (TypeUtils.isNullOrUndefined(center)) {
+            center = {
+                x: this.width / 2.0,
+                y: this.height / 2.0
+            };
         }
 
-        return this.drawOval(center, { width: radius * 2, height: radius * 2 }, color, fillColor);
+        center = toPoint2D(center);
+
+        if (TypeUtils.isNullOrUndefined(radius)) {
+            radius = Math.min((this.width - center.x) / 2.0,
+                              (this.height - center.y) / 2.0);
+        }
+
+        return this.drawOval({ width: radius * 2, height: radius * 2 },
+                             { x: center.x - radius, y: center.y - radius },
+                             color, fillColor);
     };
 
     // drawLine()
@@ -152,11 +164,15 @@ function setupBitmapClass(bitmapClass) {
 
     // normalizeColor()
     bitmapClass.prototype.normalizeColor = function(c) {
-        return toARGB(c) || this.defaultColor;
+        c = toARGB(c) || this.defaultColor;
+        
+        return !TypeUtils.isNullOrUndefined(c) ? c : null;
     };
 
     // setPoint
-    bitmapClass.prototype.setPoint = function(coordinates, color) {
+    bitmapClass.prototype.setPoint = function(color, coordinates) {
+        color = this.normalizeColor(color);
+        
         if (TypeUtils.isNullOrUndefined(coordinates)) {
             coordinates = {
                 x: this.width / 2.0,
@@ -164,9 +180,9 @@ function setupBitmapClass(bitmapClass) {
             };
         }
 
-        color = this.normalizeColor(color);
+        coordinates = toPoint2D(coordinates);
 
-        this._setPoint(coordinates, color);
+        this._setPoint(color, coordinates);
         return this;
     };
 
@@ -223,33 +239,14 @@ function toARGB(v, throwException) {
         return null;
     }
 
-    var argb = {};
+    var argb = {
+        a: 255,
+        r: 0,
+        g: 0,
+        b: 0
+    };
 
-    var _a = 255;
-    var _r = 0;
-    var _g = 0;
-    var _b = 0;
     var isValid = true;
-
-    // a
-    Object.defineProperty(argb, "a", {
-        get: function() { return _a; }
-    });
-
-    // r
-    Object.defineProperty(argb, "r", {
-        get: function() { return _r; }
-    });
-
-    // g
-    Object.defineProperty(argb, "g", {
-        get: function() { return _g; }
-    });
-
-    // b
-    Object.defineProperty(argb, "b", {
-        get: function() { return _b; }
-    });
 
     if (arguments.length < 2) {
         throwException = true;
@@ -286,11 +283,11 @@ function toARGB(v, throwException) {
                 var argbStartIndex = 3 === colorVal.length ? 0 : 1;
 
                 if (4 === colorVal.length) {
-                    _a = parseInt(colorVal[0] + colorVal[0], 16); 
+                    argb.a = parseInt(colorVal[0] + colorVal[0], 16); 
                 }
-                _r = parseInt(colorVal[argbStartIndex] + colorVal[argbStartIndex], 16);
-                _g = parseInt(colorVal[argbStartIndex + 1] + colorVal[argbStartIndex + 1], 16);
-                _b = parseInt(colorVal[argbStartIndex + 2] + colorVal[argbStartIndex + 2], 16);
+                argb.r = parseInt(colorVal[argbStartIndex] + colorVal[argbStartIndex], 16);
+                argb.g = parseInt(colorVal[argbStartIndex + 1] + colorVal[argbStartIndex + 1], 16);
+                argb.b = parseInt(colorVal[argbStartIndex + 2] + colorVal[argbStartIndex + 2], 16);
             }
             else {
                 // #(AA)RRGGBB
@@ -298,11 +295,11 @@ function toARGB(v, throwException) {
                 var argbStartIndex = 6 === colorVal.length ? 0 : 2;
 
                 if (8 === colorVal.length) {
-                    _a = parseInt(colorVal.substr(0, 2), 16);
+                    argb.a = parseInt(colorVal.substr(0, 2), 16);
                 }
-                _r = parseInt(colorVal.substr(argbStartIndex, 2), 16);
-                _g = parseInt(colorVal.substr(argbStartIndex + 2, 2), 16);
-                _b = parseInt(colorVal.substr(argbStartIndex + 4, 2), 16);
+                argb.r = parseInt(colorVal.substr(argbStartIndex, 2), 16);
+                argb.g = parseInt(colorVal.substr(argbStartIndex + 2, 2), 16);
+                argb.b = parseInt(colorVal.substr(argbStartIndex + 4, 2), 16);
             }
         }
     }
@@ -343,19 +340,7 @@ function toPoint2D(v, throwException) {
 
     var point = {};
 
-    var _x;
-    var _y;
     var isValid = true;
-
-    // x
-    Object.defineProperty(point, "x", {
-        get: function() { return _x; }
-    });
-
-    // y
-    Object.defineProperty(point, "y", {
-        get: function() { return _y; }
-    });
 
     if (arguments.length < 2) {
         throwException = true;
@@ -380,8 +365,8 @@ function toPoint2D(v, throwException) {
         
         isValid = null !== match;
         if (isValid) {
-            _x = parseFloat(match[1]);
-            _y = parseFloat(match[5]);
+            point.x = parseFloat(match[1]);
+            point.y = parseFloat(match[5]);
         }
     }
     else if (typeof v === "object") {
@@ -406,19 +391,7 @@ function toSize(v, throwException) {
 
     var size = {};
 
-    var _width;
-    var _height;
     var isValid = true;
-
-    // width
-    Object.defineProperty(size, "width", {
-        get: function() { return _width; }
-    });
-
-    // height
-    Object.defineProperty(size, "height", {
-        get: function() { return _height; }
-    });
 
     if (arguments.length < 2) {
         throwException = true;
@@ -443,8 +416,8 @@ function toSize(v, throwException) {
         
         isValid = null !== match;
         if (isValid) {
-            _width = parseFloat(match[1]);
-            _height = parseFloat(match[5]);
+            size.width = parseFloat(match[1]);
+            size.height = parseFloat(match[5]);
         }
     }
     else if (typeof v === "object") {
