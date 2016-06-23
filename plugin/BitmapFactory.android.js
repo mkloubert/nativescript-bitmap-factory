@@ -100,7 +100,7 @@ AndroidBitmap.prototype._drawOval = function(size, leftTop, color, fillColor) {
 };
 
 // [INTERNAL] _drawRect()
-AndroidBitmap.prototype._drawRect = function(center, size, color, fillColor) {
+AndroidBitmap.prototype._drawRect = function(size, leftTop, color, fillColor) {
     var paintLine = this.__createPaint(color);
     paintLine.setStyle(android.graphics.Paint.Style.STROKE);
     
@@ -115,10 +115,10 @@ AndroidBitmap.prototype._drawRect = function(center, size, color, fillColor) {
     }
 
     for (var i = paints.length; i > 0; i--) {
-        var left = center.x - size.width / 2.0;
-        var top = center.y - size.height / 2.0;
-        var right = center.x + size.width / 2.0 - 1;
-        var bottom = center.y + size.height / 2.0 - 1;
+        var left = leftTop.x;
+        var top = leftTop.y;
+        var right = left + size.width - 1;
+        var bottom = top + size.height - 1;
 
         var rect = new android.graphics.RectF(left, top,
                                               right, bottom);

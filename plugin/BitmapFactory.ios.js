@@ -126,7 +126,7 @@ iOSImage.prototype._drawRect = function(center, size, color, fillColor) {
         CGContextSetRGBStrokeColor(context,
                                    color.r, color.g, color.b, color.a);
 
-        var rect = CGRectMake(center.x - size.width / 2.0, center.y - size.height / 2.0,
+        var rect = CGRectMake(leftTop.x, leftTop.y,
                               size.width, size.height);
 
         if (null !== fillColor) {

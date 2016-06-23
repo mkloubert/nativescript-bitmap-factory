@@ -93,39 +93,37 @@ function setupBitmapClass(bitmapClass) {
             };
         }
 
+        size = toSize(size);
         leftTop = toPoint2D(leftTop);
-        
         color = this.normalizeColor(color);
         fillColor = toARGB(fillColor);
-        size = toSize(size);
 
         this._drawOval(size, leftTop, color, fillColor);
         return this;
     };
 
     // drawRect()
-    bitmapClass.prototype.drawRect = function(center, size, color, fillColor) {
-        if (TypeUtils.isNullOrUndefined(center)) {
-            center = {
-                x: this.width / 2.0,
-                y: this.height / 2.0
-            };
-        }
-
-        center = toPoint2D(center);
-
+    bitmapClass.prototype.drawRect = function(size, leftTop, color, fillColor) {
         if (TypeUtils.isNullOrUndefined(size)) {
             size = {
-                height: center.y * 2,
-                width: center.x * 2
+                height: this.height,
+                width: this.width
             };
         }
         
+        if (TypeUtils.isNullOrUndefined(leftTop)) {
+            leftTop = {
+                x: 0,
+                y: 0
+            };
+        }
+
+        size = toSize(size);
+        leftTop = toPoint2D(leftTop);
         color = this.normalizeColor(color);
         fillColor = toARGB(fillColor);
-        size = toSize(size);
 
-        this._drawRect(center, size, color, fillColor);
+        this._drawRect(size, leftTop, color, fillColor);
         return this;
     };
 
