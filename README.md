@@ -72,6 +72,9 @@ bmp.dispose(() => {
     // which can be used as ImageSource
     // in JPEG format with a quality of 75%
     var data = bmp.toDataUrl(BitmapFactory.OutputFormat.JPEG, 75);
+    
+    // ... and in Base64 format
+    var base64JPEG = bmp.toBase64(BitmapFactory.OutputFormat.JPEG, 75);
 });
 ```
 
