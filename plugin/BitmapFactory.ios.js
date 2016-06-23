@@ -79,6 +79,11 @@ iOSImage.prototype.__toIOSColor = function(color) {
     };
 };
 
+// [INTERNAL] _clone()
+iOSImage.prototype._clone = function() {
+    return new iOSImage(UIImage.imageWithData(UIImagePNGRepresentation(this._nativeObject)));
+};
+
 // [INTERNAL] _crop()
 iOSImage.prototype._crop = function(leftTop, size) {
     return this.__onImageContext(function(context, tag, oldImage) {

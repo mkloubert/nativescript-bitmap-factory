@@ -41,7 +41,7 @@ function setupBitmapClass(bitmapClass) {
 
     // clone()
     bitmapClass.prototype.clone = function() {
-        return bitmapClass.asBitmap(this.toBase64());
+        return bitmapClass.asBitmap(this._clone());
     };
 
     // crop()

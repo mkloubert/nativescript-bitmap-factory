@@ -34,7 +34,10 @@ b.setPoint({ x: i, y: 150 },
             size: 10,
         });
 
-        viewModel.set('image', b.toDataUrl());
+        var b2 = b.clone();
+        b.insert(b2, "25,25");
+
+        viewModel.set('image', b.clone().toDataUrl());
     });
     
     console.log("Bitmap disposed!");

@@ -30,9 +30,14 @@ function AndroidBitmap(bitmap) {
 
     this._isDisposed = false;
     this._nativeObject = bitmap;
-    this.__canvas = new android.graphics.Canvas(bitmap);
+    this._c = new android.graphics.Canvas(bitmap);
 }
 exports.BitmapClass = AndroidBitmap;
+
+// [ANDROID INTERNAL] __context
+Object.defineProperty(AndroidBitmap.prototype, '__canvas', {
+    get: function() { return this._c; }
+});
 
 // [ANDROID INTERNAL] __context
 Object.defineProperty(AndroidBitmap.prototype, '__context', {
@@ -48,6 +53,12 @@ AndroidBitmap.prototype.__createPaint = function(color) {
     }
 
     return paint;
+};
+
+// [INTERNAL] _clone()
+AndroidBitmap.prototype._clone = function() {
+    return new AndroidBitmap(this._nativeObject
+                                 .copy(this._nativeObject.getConfig(), true));
 };
 
 // [INTERNAL] _crop()
