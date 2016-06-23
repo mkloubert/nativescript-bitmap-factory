@@ -5,6 +5,8 @@
 
 A [NativeScript](https://nativescript.org/) module for creating and manipulating bitmap images.
 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=U3FY9F6QMDQ4L&lc=DE&item_name=Marcel%20Kloubert&item_number=nativescript%2dbitmap%2dfactory&no_note=1&no_shipping=2&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+
 ## License
 
 [MIT license](https://raw.githubusercontent.com/mkloubert/nativescript-bitmap-factory/master/LICENSE)
