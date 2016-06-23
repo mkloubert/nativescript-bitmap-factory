@@ -228,6 +228,61 @@ function setupBitmapClass(bitmapClass) {
         return bitmapClass.asBitmap(this._resize(newSize));
     };
 
+    // resizeHeight()
+    bitmapClass.prototype.resizeHeight = function(newHeight) {
+        if (TypeUtils.isNullOrUndefined(newHeight)) {
+            return this.clone();
+        }
+
+        var ratio;
+        if (0 != this.height) {
+            ratio = newHeight / this.height;
+        }
+        else {
+            if (0 != this.width) {
+                ratio = newHeight / this.width;
+            }
+            else {
+                ratio = 0;
+            }
+        }
+
+        return this.resize({ width: this.width * ratio,
+                             height: newHeight });
+    };
+
+    // resizeMax()
+    bitmapClass.prototype.resizeMax = function(maxSize) {
+        if (this.width > this.height) {
+            return this.resizeWidth(maxSize);
+        }
+
+        return this.resizeHeight(maxSize);
+    };
+
+    // resizeWidth()
+    bitmapClass.prototype.resizeWidth = function(newWidth) {
+        if (TypeUtils.isNullOrUndefined(newWidth)) {
+            return this.clone();
+        }
+
+        var ratio;
+        if (0 != this.width) {
+            ratio = newWidth / this.width;
+        }
+        else {
+            if (0 != this.height) {
+                ratio = newWidth / this.height;
+            }
+            else {
+                ratio = 0;
+            }
+        }
+
+        return this.resize({ width: newWidth,
+                             height: this.height * ratio });
+    };
+
     // setPoint
     bitmapClass.prototype.setPoint = function(color, coordinates) {
         color = this.normalizeColor(color);

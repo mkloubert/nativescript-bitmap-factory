@@ -305,6 +305,33 @@ export interface IBitmap {
     resize(newSize: ISize | string): IBitmap;
 
     /**
+     * Resizes that image by defining a new height by keeping ratio.
+     * 
+     * @param {Number} newHeight The new height.
+     * 
+     * @return {IBitmap} The resized image.
+     */
+    resizeHeight(newHeight: number): IBitmap;
+
+    /**
+     * Resizes that image by defining a new (maximum) size by keeping ratio.
+     * 
+     * @param {Number} maxSize The maximum width or height.
+     * 
+     * @return {IBitmap} The resized image.
+     */
+    resizeMax(maxSize: number): IBitmap;
+
+    /**
+     * Resizes that image by defining a new width by keeping ratio.
+     * 
+     * @param {Number} newWidth The new width.
+     * 
+     * @return {IBitmap} The resized image.
+     */
+    resizeWidth(newWidth: number): IBitmap;
+
+    /**
      * Sets a pixel / point.
      * 
      * @param {IArgb} [color] The color of the point.
