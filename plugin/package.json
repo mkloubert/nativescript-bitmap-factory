@@ -1,7 +1,7 @@
 {
   "name": "nativescript-bitmap-factory",
   "description": "A NativeScript module for creating and manipulating bitmap images.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "nativescript": {
     "platforms": {
       "ios": "1.0.0",  
