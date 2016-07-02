@@ -246,7 +246,7 @@ enum OutputFormat {
 
 ```typescript
 interface IBitmap {
-   /**
+    /**
      * Get the android specific object provided by 'application' module.
      */
     android: any;
@@ -376,6 +376,11 @@ interface IBitmap {
      * Converts that image to a data URL.
      */
     toDataUrl(format?: OutputFormat, quality?: number): string;
+
+    /**
+     * Returns that image as ImageSource.
+     */
+    toImageSource(): ImageSource.ImageSource;
 
     /**
      * Converts that image to an object.
