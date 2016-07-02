@@ -81,6 +81,9 @@ bmp.dispose(() => {
     
     // ... and in Base64 format
     var base64JPEG = bmp.toBase64(BitmapFactory.OutputFormat.JPEG, 75);
+    
+    // ... and as ImageSource
+    var imgSrc = bmp.toImageSource();
 });
 ```
 
