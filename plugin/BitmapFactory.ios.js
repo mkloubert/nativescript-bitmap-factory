@@ -156,8 +156,6 @@ iOSImage.prototype._drawArc = function(size, leftTop, startAngle, endAngle, colo
         CGContextSetRGBStrokeColor(context,
                                    color.r, color.g, color.b, color.a);
 
-        var rect = CGRectMake(leftTop.x, leftTop.y,
-                              size.width, size.height);
         var radius = Math.min(size.width, size.height)*0.5
 
         if (null !== fillColor) {
@@ -165,8 +163,8 @@ iOSImage.prototype._drawArc = function(size, leftTop, startAngle, endAngle, colo
                                      fillColor.r, fillColor.g, fillColor.b, fillColor.a);
 
         }
-        CGContextMoveToPoint(context, size.width*0.5, size.height*0.5);
-        CGContextAddArc(context, size.width*0.5, size.height*0.5, radius, iosStartAngle, iosEndAngle, 0)
+        CGContextMoveToPoint(context, (size.width*0.5)+leftTop.x, (size.height*0.5)+leftTop.y);
+        CGContextAddArc(context, (size.width*0.5)+leftTop.x, (size.height*0.5)+leftTop.y, radius, iosStartAngle, iosEndAngle, 0);
         if (null !== fillColor) {
           CGContextFillPath(context);
         }
