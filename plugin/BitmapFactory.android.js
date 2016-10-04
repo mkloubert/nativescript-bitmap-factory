@@ -123,7 +123,7 @@ AndroidBitmap.prototype._drawOval = function(size, leftTop, color, fillColor) {
     }
 };
 
-// [INTERNAL] _drawOval()
+// [INTERNAL] _drawArc()
 AndroidBitmap.prototype._drawArc = function(size, leftTop, startAngle, sweepAngle, color, fillColor) {
     var me = this;
 
