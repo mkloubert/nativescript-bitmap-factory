@@ -56,6 +56,14 @@ bmp.dispose(() => {
     // "dark green" as border color           
     bmp.drawCircle(80, null,
                    KnownColors.DarkGreen);
+                
+    // draws an arc with a size of 100x200
+    // at x=10 and y=20
+    // beginning at angle 0 with a sweep angle of 90 degrees
+    // and a black border and a yellow fill color    
+    bmp.drawArc("100x200", "10,20",
+                0, 90,
+                KnownColors.Black, KnownColors.Yellow);
                    
     // set a yellow point at x=160, y=150
     bmp.setPoint("160,150", "ff0");
@@ -272,6 +280,11 @@ interface IBitmap {
      */
     dispose(action?: (bmp: IBitmap, tag?: any) => void,
             tag?: any);
+            
+    /**
+     * Draws an arc.
+     */
+    drawArc(size?: ISize | string, leftTop?: IPoint2D | string, startAngle?: number, sweepAngle?: number, color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
 
     /**
      * Draws a circle.
