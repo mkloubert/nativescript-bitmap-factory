@@ -284,7 +284,10 @@ interface IBitmap {
     /**
      * Draws an arc.
      */
-    drawArc(size?: ISize | string, leftTop?: IPoint2D | string, startAngle?: number, sweepAngle?: number, color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
+    drawArc(size?: ISize | string,
+            leftTop?: IPoint2D | string,
+            startAngle?: number, sweepAngle?: number,
+            color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
 
     /**
      * Draws a circle.
