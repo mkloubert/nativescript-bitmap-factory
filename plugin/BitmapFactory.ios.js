@@ -39,7 +39,7 @@ Object.defineProperty(iOSImage.prototype, '__CGImage', {
     get: function() { return this._nativeObject.CGImage; }
 });
 
-// [iOS INTERNAL] __CGImage
+// [iOS INTERNAL] __doAutoRelease
 Object.defineProperty(iOSImage.prototype, '__doAutoRelease', {
     get: function() {
         var autoRelease = true;
