@@ -25,7 +25,7 @@ var TypeUtils = require("utils/types");
 
 function AndroidBitmap(bitmap, opts) {
     if (!(this instanceof AndroidBitmap)) {
-        return new AndroidBitmap(bitmap);
+        return new AndroidBitmap(bitmap, opts);
     }
 
     this._isDisposed = false;

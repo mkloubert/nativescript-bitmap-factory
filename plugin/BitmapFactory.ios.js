@@ -25,7 +25,7 @@ var TypeUtils = require("utils/types");
 
 function iOSImage(uiImage, opts) {
     if (!(this instanceof iOSImage)) {
-        return new iOSImage(uiImage);
+        return new iOSImage(uiImage, opts);
     }
 
     this._isDisposed = false;
