@@ -7,6 +7,7 @@ CD ..
 CD plugin
 ECHO Rebuild plugin...
 CALL tsc
+CALL tsc -d
 ECHO Done
 
 CD ..

@@ -499,3 +499,12 @@ function createBitmap(width, height, opts) {
     return new iOSImage(img, opts);
 }
 exports.createBitmap = createBitmap;
+
+function makeBitmapMutable(uiImg, opts) {
+    if (!(uiImg instanceof UIImage)) {
+        throw "No valid image object!";
+    }
+
+    return UIImage.imageWithData(UIImagePNGRepresentation(uiImg));
+}
+exports.makeBitmapMutable = makeBitmapMutable;

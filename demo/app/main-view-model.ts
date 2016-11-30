@@ -39,12 +39,19 @@ export function createViewModel() {
 
             var b2 = b.clone().resize("20x20");
             b.insert(b2, "25,25");
+
+            var mutable = BitmapFactory.makeMutable(b.nativeObject, {
+                disposeCurrent: true,
+                temp: {
+                    stradegy: BitmapFactory.TempFileStradegy.CacheDir,
+                }
+            });
+
+            viewModel.set('image', BitmapFactory.asBitmap(mutable).toDataUrl());
         }
         catch (e) {
             console.log('ERROR: ' + e);
         }
-
-        viewModel.set('image', b.clone().toDataUrl());
     });
     
     console.log("Bitmap disposed!");
