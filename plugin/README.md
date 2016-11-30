@@ -101,6 +101,9 @@ bmp.dispose(() => {
 | ---- | --------- |
 | asBitmap | Returns a value as wrapped bitmap. |
 | create | Creates a new bitmap instance. |
+| getDefaultOptions | Returns the default options for creating a new bitmap. |
+| makeMutable | A helper function that keeps sure to return a native image object that is able to be used as wrapped bitmap object. |
+| setDefaultOptions | Sets the default options for creating a new bitmap. |
 
 ## Platform specific stuff
 
