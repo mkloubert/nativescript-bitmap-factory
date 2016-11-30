@@ -409,6 +409,14 @@ function createBitmap(width, height, opts) {
 exports.createBitmap = createBitmap;
 
 function makeBitmapMutable(bitmap, opts) {
+    if (bitmap instanceof ImageSource.ImageSource) {
+        return new makeBitmapMutable(bitmap.android, opts);
+    }
+
+    if (bitmap instanceof AndroidBitmap) {
+        return new makeBitmapMutable(bitmap.nativeObject, opts);
+    }
+
     if (!(bitmap instanceof android.graphics.Bitmap)) {
         throw "No valid bitmap object!";
     }

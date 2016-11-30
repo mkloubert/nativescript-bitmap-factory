@@ -113,23 +113,23 @@ function getDefaultOptions() {
 }
 exports.getDefaultOptions = getDefaultOptions;
 /**
- * Makes a native image / bitmap mutable.
+ * Makes a (native) image / bitmap mutable.
  *
- * @param {any} nativeObj The native object.
+ * @param {any} v The (native) object.
  * @param {IMakeMutableOptions} [opts] The custom options.
  *
  * @return {any} The mutable object.
  *
  * @throws Native object is invalid.
  */
-function makeMutable(nativeObj, opts) {
-    if (TypeUtils.isNullOrUndefined(nativeObj)) {
-        return nativeObj;
+function makeMutable(v, opts) {
+    if (TypeUtils.isNullOrUndefined(v)) {
+        return v;
     }
     if (!opts) {
         opts = {};
     }
-    return BitmapFactory.makeBitmapMutable(nativeObj, opts);
+    return BitmapFactory.makeBitmapMutable(v, opts);
 }
 exports.makeMutable = makeMutable;
 /**

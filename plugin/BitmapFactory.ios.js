@@ -501,6 +501,14 @@ function createBitmap(width, height, opts) {
 exports.createBitmap = createBitmap;
 
 function makeBitmapMutable(uiImg, opts) {
+    if (uiImg instanceof ImageSource.ImageSource) {
+        return new makeBitmapMutable(uiImg.ios, opts);
+    }
+
+    if (uiImg instanceof iOSImage) {
+        return new makeBitmapMutable(uiImg.nativeObject, opts);
+    }
+
     if (!(uiImg instanceof UIImage)) {
         throw "No valid image object!";
     }

@@ -441,16 +441,16 @@ export declare function create(width: number, height?: number, opts?: ICreateBit
  */
 export declare function getDefaultOptions(): ICreateBitmapOptions;
 /**
- * Makes a native image / bitmap mutable.
+ * Makes a (native) image / bitmap mutable.
  *
- * @param {any} nativeObj The native object.
+ * @param {any} v The (native) object.
  * @param {IMakeMutableOptions} [opts] The custom options.
  *
  * @return {any} The mutable object.
  *
  * @throws Native object is invalid.
  */
-export declare function makeMutable(nativeObj: any, opts?: IMakeMutableOptions): any;
+export declare function makeMutable(v: any, opts?: IMakeMutableOptions): any;
 /**
  * Sets the default options for creating a new bitmap.
  *
