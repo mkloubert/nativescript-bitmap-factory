@@ -319,8 +319,9 @@ iOSImage.prototype._rotate = function(degrees) {
     var oldImg = this._nativeObject;
 
     try {
-        var s = CGSizeMake(this.width, this.height);
-        UIGraphicsBeginImageContext(s);
+        UIGraphicsBeginImageContext(oldImg.size);
+
+        var context = UIGraphicsGetCurrentContext();
 
         CGContextRotateCTM(context, radians);
 
