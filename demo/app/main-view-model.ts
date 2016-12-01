@@ -40,14 +40,7 @@ export function createViewModel() {
             var b2 = b.clone().resize("20x20");
             b.insert(b2, "25,25");
 
-            var mutable = BitmapFactory.makeMutable(b.nativeObject, {
-                disposeCurrent: true,
-                temp: {
-                    stradegy: BitmapFactory.TempFileStradegy.CacheDir,
-                }
-            });
-
-            viewModel.set('image', BitmapFactory.asBitmap(mutable).toDataUrl());
+            viewModel.set('image', b.rotate(-37).toDataUrl());
         }
         catch (e) {
             console.log('ERROR: ' + e);
