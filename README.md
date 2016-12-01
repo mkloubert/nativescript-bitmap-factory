@@ -211,7 +211,7 @@ interface IPoint2D {
     x: number;
     
     /**
-     * Gets the X coordinate.
+     * Gets the Y coordinate.
      */
     y: number;
 }
@@ -260,7 +260,7 @@ interface IBitmap {
     /**
      * Get the android specific object provided by 'application' module.
      */
-    android: any;
+    android: AndroidApplication;
 
     /**
      * Clones that bitmap.
@@ -281,16 +281,8 @@ interface IBitmap {
     /**
      * Disposes the bitmap. Similar to the IDisposable pattern of .NET Framework.
      */
-    dispose(action?: (bmp: IBitmap, tag?: any) => void,
-            tag?: any);
-            
-    /**
-     * Draws an arc.
-     */
-    drawArc(size?: ISize | string,
-            leftTop?: IPoint2D | string,
-            startAngle?: number, sweepAngle?: number,
-            color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
+    dispose<T, TResult>(action?: (bmp: IBitmap, tag?: T) => TResult,
+                        tag?: T): TResult;
 
     /**
      * Draws a circle.
@@ -298,6 +290,15 @@ interface IBitmap {
     drawCircle(radius?: number,
                center?: IPoint2D | string,
                color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
+
+    /**
+     * Draws an arc.
+     */
+    drawArc(size?: ISize | string,
+            leftTop?: IPoint2D | string,
+            startAngle?: number,
+            sweepAngle?: number,
+            color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
 
     /**
      * Draws a line.
@@ -317,7 +318,7 @@ interface IBitmap {
      */
     drawRect(size?: ISize | string,
              leftTop?: IPoint2D | string,
-             color?: string | number | IArgb, fillColor?: string | number | IArgb);
+             color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
 
     /**
      * Gets the color of a point.
@@ -332,7 +333,7 @@ interface IBitmap {
     /**
      * Get the iOS specific object provided by 'application' module.
      */
-    ios: any;
+    ios: iOSApplication;
 
     /**
      * Inserts another image into that bitmap.
@@ -376,10 +377,15 @@ interface IBitmap {
     resizeWidth(newWidth: number): IBitmap;
 
     /**
+     * Rotates the image.
+     */
+    rotate(degrees?: number): IBitmap;
+
+    /**
      * Sets a pixel / point.
      */
     setPoint(coordinates?: IPoint2D | string,
-             color?: string | number | IArgb);
+             color?: string | number | IArgb): IBitmap;
 
     /**
      * Gets the size.
@@ -399,7 +405,7 @@ interface IBitmap {
     /**
      * Returns that image as ImageSource.
      */
-    toImageSource(): ImageSource.ImageSource;
+    toImageSource(): ImageSource;
 
     /**
      * Converts that image to an object.
