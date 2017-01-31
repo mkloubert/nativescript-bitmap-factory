@@ -32,9 +32,10 @@ export function createViewModel() {
             // var p = b.getPoint({ x: 150, y: 150 });
             // console.log("Point: " + [p.a, p.r, p.g, p.b]);
 
-            b.writeText("This is a test!", "100,100", {
+            b.writeText("This is a test! " + '\uf087', "100,100", {
                 color: KnownColors.Yellow,
                 size: 10,
+                name: 'fontawesome-webfont',
             });
 
             var b2 = b.clone().resize("20x20");
