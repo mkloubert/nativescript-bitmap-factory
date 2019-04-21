@@ -166,18 +166,19 @@ iOSImage.prototype._dispose = function(action, tag) {
 };
 
 // [INTERNAL] _drawLine()
-iOSImage.prototype._drawLine = function(start, end, color) {
+iOSImage.prototype._drawLine = function (start, end, width, color) {
     color = this.__toIOSColor(color);
 
     this.__onImageContext(function(context, tag, oldImage) {
         CGContextSetRGBStrokeColor(context,
                                    color.r, color.g, color.b, color.a);
 
-        CGContextSetLineWidth(context, 1.0);
+        CGContextSetLineWidth(context, width);
 
         CGContextMoveToPoint(context, start.x, start.y);
         CGContextAddLineToPoint(context,
                                 end.x, end.y);
+        CGContextSetLineCap(context, CGLineCap.Square);
 
         CGContextStrokePath(context);
     });
@@ -255,6 +256,14 @@ iOSImage.prototype._drawRect = function(size, leftTop, color, fillColor) {
         }
         
         CGContextStrokeRect(context, rect);
+    });
+};
+
+// [INTERNAL] _clip()
+iOSImage.prototype._clip = function (size, leftTop) {
+    this.__onImageContext(function (context, tag, oldImage) {
+        var rect = CGRectMake(leftTop.x, leftTop.y, size.width, size.height);
+        CGContextClipToRect(context, rect);
     });
 };
 
