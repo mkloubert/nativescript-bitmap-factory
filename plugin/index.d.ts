@@ -1,5 +1,5 @@
-import Application = require("application");
-import ImageSource = require('image-source');
+import Application = require("tns-core-modules/application");
+import ImageSource = require('tns-core-modules/image-source');
 /**
  * Describes an object that stores ARGB color data.
  */
