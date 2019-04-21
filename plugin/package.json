@@ -4,7 +4,7 @@
   "version": "1.8.0",
   "nativescript": {
     "platforms": {
-      "ios": "1.0.0",  
+      "ios": "1.0.0",
       "android": "1.1.0"
     }
   },
