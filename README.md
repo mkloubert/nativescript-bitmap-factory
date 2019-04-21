@@ -424,3 +424,10 @@ interface IBitmap {
     width: number;
 }
 ```
+
+## Contributors
+
+* [Dimitar Topuzov](https://github.com/dtopuzov)
+* [Geoff Bullen](https://github.com/geoffbullen)
+* [Jonathan Salomon](https://github.com/abhayastudios)
+* [Josh Huckabee](https://github.com/jhuckabee)
