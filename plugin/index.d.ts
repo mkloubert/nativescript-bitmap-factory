@@ -218,11 +218,12 @@ export interface IBitmap {
      *
      * @param {IPoint2D} start The coordinates of the start point.
      * @param {IPoint2D} end The coordinates of the end point.
+     * @param {number} width The line width to stroke with.
      * @param {IArgb} [color] The color to use. Default is black.
      *
      * @throws At least one input value is invalid.
      */
-    drawLine(start: IPoint2D | string, end: IPoint2D | string, color?: string | number | IArgb): IBitmap;
+    drawLine(start: IPoint2D | string, end: IPoint2D | string, width: number, color?: string | number | IArgb): IBitmap;
     /**
      * Draws an oval circle.
      *
@@ -249,6 +250,17 @@ export interface IBitmap {
      * @throws At least one input value is invalid.
      */
     drawRect(size?: ISize | string, leftTop?: IPoint2D | string, color?: string | number | IArgb, fillColor?: string | number | IArgb): IBitmap;
+    /**
+     * Clip to a rectangular area.
+     *
+     * @chainable
+     *
+     * @param {ISize} [size] The size.
+     * @param {IPoint2D} [leftTop] The coordinates of the left/top corner.
+     *
+     * @throws At least one input value is invalid.
+     */
+    clip(size?: ISize | string, leftTop?: IPoint2D | string): IBitmap;
     /**
      * Gets the color of a point.
      *

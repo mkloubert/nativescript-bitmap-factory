@@ -115,12 +115,16 @@ function setupBitmapClass(bitmapClass) {
     };
 
     // drawLine()
-    bitmapClass.prototype.drawLine = function(start, end, color) {
+    bitmapClass.prototype.drawLine = function (start, end, width, color) {
         start = toPoint2D(start);
         end = toPoint2D(end);
         color = toARGB(color);
 
-        this._drawLine(start, end, color);
+        if (TypeUtils.isNullOrUndefined(width)) {
+            width = 1.0;
+        }
+
+        this._drawLine(start, end, width, color);
         return this;
     };
 
@@ -199,6 +203,28 @@ function setupBitmapClass(bitmapClass) {
         return this;
     };
 
+    // clip()
+    bitmapClass.prototype.clip = function (size, leftTop) {
+        if (TypeUtils.isNullOrUndefined(size)) {
+            size = {
+                height: this.height,
+                width: this.width
+            };
+        }
+
+        if (TypeUtils.isNullOrUndefined(leftTop)) {
+            leftTop = {
+                x: 0,
+                y: 0
+            };
+        }
+
+        size = toSize(size);
+        leftTop = toPoint2D(leftTop);
+        this._clip(size, leftTop);
+        return this;
+    };
+
     // getPoint
     bitmapClass.prototype.getPoint = function(coordinates, color) {
         if (TypeUtils.isNullOrUndefined(coordinates)) {
@@ -273,8 +299,10 @@ function setupBitmapClass(bitmapClass) {
             }
         }
 
-        return this.resize({ width: this.width * ratio,
-                             height: newHeight });
+        return this.resize({
+            width: this.width * ratio,
+            height: newHeight
+        });
     };
 
     // resizeMax()
@@ -305,8 +333,10 @@ function setupBitmapClass(bitmapClass) {
             }
         }
 
-        return this.resize({ width: newWidth,
-                             height: this.height * ratio });
+        return this.resize({
+            width: newWidth,
+            height: this.height * ratio
+        });
     };
 
     // rotate()
