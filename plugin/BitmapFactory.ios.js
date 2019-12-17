@@ -313,7 +313,7 @@ iOSImage.prototype._resize = function(newSize) {
 };
 
 // [INTERNAL] _rotate()
-iOSImage.prototype._rotate = function(degrees) {
+iOSImage.prototype._rotate = function (degrees) {
     radians = degrees * Math.PI / 180.0;
 
     var oldImg = this._nativeObject;
@@ -322,15 +322,15 @@ iOSImage.prototype._rotate = function(degrees) {
         UIGraphicsBeginImageContext(oldImg.size);
 
         var context = UIGraphicsGetCurrentContext();
-
+        CGContextTranslateCTM(context, oldImg.size.width / 2.0, oldImg.size.height / 2.0);
         CGContextRotateCTM(context, radians);
 
-        oldImg.drawAtPoint(CGPointMake(0, 0));
+        oldImg.drawInRect(CGRectMake(-oldImg.size.width / 2.0, -oldImg.size.height / 2.0, oldImg.size.width, oldImg.size.height));
 
         return UIGraphicsGetImageFromCurrentImageContext();
     }
     finally {
-         UIGraphicsEndImageContext();
+        UIGraphicsEndImageContext();
     }
 };
 
